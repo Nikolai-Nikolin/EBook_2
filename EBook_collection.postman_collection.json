@@ -158,12 +158,18 @@
 			"response": []
 		},
 		{
-			"name": "delete_book_by_id",
+			"name": "delete_book_by_id (NEED AUTH)",
 			"request": {
 				"method": "DELETE",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcwNzE0NzM1NSwianRpIjoiZmZlMzk5YzctYTVjMi00NmE0LWJlZTYtM2ZmNmFmMzY3ZDcyIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MiwibmJmIjoxNzA3MTQ3MzU1LCJjc3JmIjoiYWMwNGVlMmYtNzVlNi00NWFiLTk3YWYtY2M2Nzk1OGIyZWRjIiwiZXhwIjoxNzA3MTQ4MjU1LCJyb2xlIjoidmlld2VyIn0.T6hk1WP6q9yuRMKdGbSGumBzs6zrKCFkQaIuS23Yq2A",
+						"type": "text"
+					}
+				],
 				"url": {
-					"raw": "http://127.0.0.1:7000/books/5",
+					"raw": "http://127.0.0.1:7000/books/12",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -174,7 +180,7 @@
 					"port": "7000",
 					"path": [
 						"books",
-						"5"
+						"12"
 					]
 				}
 			},
@@ -234,12 +240,18 @@
 			"response": []
 		},
 		{
-			"name": "delete_author",
+			"name": "delete_author (NEED AUTH)",
 			"request": {
 				"method": "DELETE",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcwNzE0NzEwNywianRpIjoiNDcxY2Y4M2ItY2NkMC00MDljLThiMDYtZjAzMmExNGQwNzMyIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MiwibmJmIjoxNzA3MTQ3MTA3LCJjc3JmIjoiZmU4YjcyZTgtNDkyOS00MjMyLWE0NjgtNjU2NGFmMjBiMGNlIiwiZXhwIjoxNzA3MTQ4MDA3LCJyb2xlIjoidmlld2VyIn0.9MC9PZj9jg50-uBw7FHssp2yXIWz3Fhizs4eFxR2Sh0",
+						"type": "text"
+					}
+				],
 				"url": {
-					"raw": "http://127.0.0.1:7000/authors/2",
+					"raw": "http://127.0.0.1:7000/authors/6",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -250,7 +262,7 @@
 					"port": "7000",
 					"path": [
 						"authors",
-						"2"
+						"6"
 					]
 				}
 			},
@@ -546,12 +558,18 @@
 			"response": []
 		},
 		{
-			"name": "delete_reader_by_id",
+			"name": "delete_reader_by_id (NEED AUTH)",
 			"request": {
 				"method": "DELETE",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcwNzE0NjgwMiwianRpIjoiNTFhMzFmNjUtYzYxNS00NDkxLTlkZTctZDQ5MzM3NzczYzBlIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MSwibmJmIjoxNzA3MTQ2ODAyLCJjc3JmIjoiNmM5MDAxNzAtYzgwYS00OTgxLTk0NjEtZDlmZGIzOGJmNTBjIiwiZXhwIjoxNzA3MTQ3NzAyLCJyb2xlIjoiYWRtaW4ifQ.MvV5ddtMqBTDl9r_6hxXFCPt7wvplSpWCW_4Ps_KuC0",
+						"type": "text"
+					}
+				],
 				"url": {
-					"raw": "http://127.0.0.1:7000/readers/10",
+					"raw": "http://127.0.0.1:7000/readers/15",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -562,7 +580,7 @@
 					"port": "7000",
 					"path": [
 						"readers",
-						"10"
+						"15"
 					]
 				}
 			},
@@ -656,37 +674,6 @@
 			"response": []
 		},
 		{
-			"name": "add_new_staff",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"name\": \"Marlon Brando\",\r\n  \"role\": \"maker\",\r\n  \"access_level\": 2\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://127.0.0.1:7000/staff",
-					"protocol": "http",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
-					"port": "7000",
-					"path": [
-						"staff"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "get_staff_by_id",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
@@ -722,7 +709,7 @@
 			"response": []
 		},
 		{
-			"name": "get_all_staff",
+			"name": "get_all_staff (NEED AUTH)",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -756,13 +743,19 @@
 			"response": []
 		},
 		{
-			"name": "update_staff_role_by_id",
+			"name": "update_staff_role_by_id (NEED AUTH)",
 			"request": {
 				"method": "PUT",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcwNzE0NDQ3NiwianRpIjoiMWEwZGE0ZjctNDQ2ZS00YTJkLWJjOWQtNzI3MDBlM2UxNTNhIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MSwibmJmIjoxNzA3MTQ0NDc2LCJjc3JmIjoiY2U5OWNkZmUtNWM5MS00N2ZkLTg1MWEtODFkZGJmOTRlOGZhIiwiZXhwIjoxNzA3MTQ1Mzc2LCJyb2xlIjoiYWRtaW4ifQ.GPAeY0zjcBnRYdf_djh0ffju5er8z5JHxmfdOtBiNpc",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"role\": \"new role test\"\r\n}",
+					"raw": "{\r\n    \"role\": \"admin\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -770,7 +763,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:7000/staff/1/role",
+					"raw": "http://127.0.0.1:7000/staff/2/role",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -781,7 +774,7 @@
 					"port": "7000",
 					"path": [
 						"staff",
-						"1",
+						"2",
 						"role"
 					]
 				}
@@ -789,13 +782,19 @@
 			"response": []
 		},
 		{
-			"name": "update_staff_level_by_id",
+			"name": "update_staff_level_by_id (NEED AUTH)",
 			"request": {
 				"method": "PUT",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcwNzE0NTY5OSwianRpIjoiNWExNmI3Y2MtN2Y4My00ZjQ5LTk3OTktYjY3MjFiOGRhYzc2IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MSwibmJmIjoxNzA3MTQ1Njk5LCJjc3JmIjoiMjgyYmI3ZDEtY2MzZS00OGIyLThmMTYtY2E4M2E2MmU3MjRhIiwiZXhwIjoxNzA3MTQ2NTk5LCJyb2xlIjoiYWRtaW4ifQ._XK5bkWSlP_6pLtOJK8ek522p0G9tpC3p0QG21l9OkA",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"level\": 3\r\n}",
+					"raw": "{\r\n    \"level\": 1\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -822,10 +821,16 @@
 			"response": []
 		},
 		{
-			"name": "delete_staff_by_id",
+			"name": "delete_staff_by_id (NEED AUTH)",
 			"request": {
 				"method": "DELETE",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcwNzE0NTk5MywianRpIjoiODBkOTM3NTMtNDZhNC00NDI1LWFjZGUtMzZmZTMwNmI3OGMyIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MiwibmJmIjoxNzA3MTQ1OTkzLCJjc3JmIjoiODhkMTNjMWUtYWIwZS00OWVmLTlmMDgtZWU4NzZkNzIxZTFiIiwiZXhwIjoxNzA3MTQ2ODkzLCJyb2xlIjoidmlld2VyIn0.pCtBbkzKo-DTNQPrQOUz3uBj4xso4mMBJq5fkvplW-4",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
 					"raw": "",
@@ -836,7 +841,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:7000/staff/1",
+					"raw": "http://127.0.0.1:7000/staff/4",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -847,7 +852,111 @@
 					"port": "7000",
 					"path": [
 						"staff",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "РЕГИСТРАЦИЯ",
+			"request": {
+				"auth": {
+					"type": "jwt",
+					"jwt": [
+						{
+							"key": "algorithm",
+							"value": "HS256",
+							"type": "string"
+						},
+						{
+							"key": "isSecretBase64Encoded",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "payload",
+							"value": "{}",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "headerPrefix",
+							"value": "Bearer",
+							"type": "string"
+						},
+						{
+							"key": "queryParamKey",
+							"value": "token",
+							"type": "string"
+						},
+						{
+							"key": "header",
+							"value": "{}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Nikolai\",\r\n    \"password\": \"qwerty\",\r\n    \"role\": \"admin\",\r\n    \"access_level\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:7000/auth/sign-up",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
 						"1"
+					],
+					"port": "7000",
+					"path": [
+						"auth",
+						"sign-up"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "АВТОРИЗАЦИЯ",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Somebody\",\r\n    \"password\": \"parol\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:7000/auth/sign-in",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "7000",
+					"path": [
+						"auth",
+						"sign-in"
 					]
 				}
 			},

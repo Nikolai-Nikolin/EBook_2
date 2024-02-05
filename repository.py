@@ -457,57 +457,22 @@ def get_order_details(order_id):
 
 
 # === УПРАВЛЕНИЕ ПЕРСОНАЛОМ ===
-
-# Регистрация пользователя
-def add_staff(staff):
-    try:
-        with Session(autoflush=False, bind=engine) as db:
-            db.add(staff)
-            db.commit()
-    except SQLAlchemyError as e:
-        print(f"Error creating user: {e}")
-        db.rollback()
-        return f"Error creating user: {e}"
-
-
-# Поиск авторизованного сотрудника
-def get_staff(name, password):
-    try:
-        with Session(autoflush=False, bind=engine) as db:
-            staff = db.query(Staff).filter(and_(Staff.name == name,
-                                                Staff.password == password)).first()
-        return staff
-    except SQLAlchemyError as e:
-        print(f"Error getting user: {e}")
-        return None
-
-
-# Ищем сотрудника по его роли (необходимо для роута авторизации)
-def get_staff_role(staff_id):
-    with Session(autoflush=False, bind=engine) as db:
-        staff = db.query(Staff).filter_by(id=staff_id).first()
-        if staff:
-            return staff.role
-        else:
-            return None
-
-
 # Поиск сотрудника по id
-# def get_staff(_id):
-#     with Session(autoflush=False, bind=engine) as db:
-#         staff = db.query(Staff).filter_by(id=_id).first()
-#         if staff:
-#             staff_by_id = {
-#                 'id': staff.id,
-#                 'name': staff.name,
-#                 'password': staff.password,
-#                 'role': staff.role,
-#                 'access_level': staff.access_level,
-#                 'is_deleted': staff.is_deleted
-#             }
-#             return staff_by_id
-#         else:
-#             return False
+def get_staff_id(_id):
+    with Session(autoflush=False, bind=engine) as db:
+        staff = db.query(Staff).filter_by(id=_id).first()
+        if staff:
+            staff_by_id = {
+                'id': staff.id,
+                'name': staff.name,
+                'password': staff.password,
+                'role': staff.role,
+                'access_level': staff.access_level,
+                'is_deleted': staff.is_deleted
+            }
+            return staff_by_id
+        else:
+            return False
 
 
 # Просмотр всех сотрудников
@@ -543,11 +508,11 @@ def update_staff_new_role(_id, _new_role):
 
 
 # Обновить уровень допуска для сотрудника
-def update_staff_new_access_level(_id):
+def update_staff_new_access_level(_id, _new_level):
     with Session(autoflush=False, bind=engine) as db:
         staff = db.query(Staff).filter_by(id=_id).first()
         if staff:
-            staff.access_level += 1
+            staff.access_level = _new_level
             db.commit()
             return True
         return False
@@ -563,3 +528,39 @@ def delete_staff(_id):
             return {"message": "Работник успешно удален"}
         else:
             return {"error": "Работник не найден"}
+
+
+# ====== АВТОРИЗАЦИЯ ПЕРСОНАЛА ========
+
+# Регистрация пользователя
+def add_staff(staff):
+    try:
+        with Session(autoflush=False, bind=engine) as db:
+            db.add(staff)
+            db.commit()
+    except SQLAlchemyError as e:
+        print(f"Error creating user: {e}")
+        db.rollback()
+        return f"Error creating user: {e}"
+
+
+# Поиск авторизованного сотрудника
+def get_staff(name, password):
+    try:
+        with Session(autoflush=False, bind=engine) as db:
+            staff = db.query(Staff).filter(and_(Staff.name == name,
+                                                Staff.password == password)).first()
+        return staff
+    except SQLAlchemyError as e:
+        print(f"Error getting user: {e}")
+        return None
+
+
+# Ищем сотрудника по его роли (необходимо для роута авторизации)
+def get_staff_role(staff_id):
+    with Session(autoflush=False, bind=engine) as db:
+        staff = db.query(Staff).filter_by(id=staff_id).first()
+        if staff:
+            return staff.role
+        else:
+            return None

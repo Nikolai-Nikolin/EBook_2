@@ -60,9 +60,14 @@ def update_existing_book(book_id):
     return jsonify(updated_book), 200
 
 
-# Удаление книги
+# Удаление книги (НУЖНА АВТОРИЗАЦИЯ ДЛЯ ИЗМЕНЕНИЙ)
 @app.route("/books/<book_id>", methods=["DELETE"])
+@jwt_required()
 def delete_existing_book(book_id):
+    claims = get_jwt()
+    user_role = claims['role']
+    if user_role != 'admin':
+        return jsonify(error="У вас нет доступа!"), 403
     get_info_about_is_deleted = repository.delete_book(book_id)
     if get_info_about_is_deleted:
         return jsonify(message="Book deleted"), 200
@@ -131,9 +136,14 @@ def update_existing_author(author_id):
     return jsonify(updated_author), 200
 
 
-# Удаление автора
+# Удаление автора (НУЖНА АВТОРИЗАЦИЯ ДЛЯ ИЗМЕНЕНИЙ)
 @app.route("/authors/<int:author_id>", methods=["DELETE"])
+@jwt_required()
 def delete_author_by_id(author_id):
+    claims = get_jwt()
+    user_role = claims['role']
+    if user_role != 'admin':
+        return jsonify(error="У вас нет доступа!"), 403
     success = repository.delete_author(author_id)
     if success:
         return jsonify({'message': 'Автор успешно удален'}), 200
@@ -188,9 +198,14 @@ def create_new_reader():
         return jsonify(error="Failed to create reader"), 500
 
 
-# Удалить читателя по id
+# Удалить читателя по id (НУЖНА АВТОРИЗАЦИЯ ДЛЯ ИЗМЕНЕНИЙ)
 @app.route("/readers/<int:reader_id>", methods=["DELETE"])
+@jwt_required()
 def delete_reader(reader_id):
+    claims = get_jwt()
+    user_role = claims['role']
+    if user_role != 'admin':
+        return jsonify(error="У вас нет доступа!"), 403
     result = repository.delete_reader_by_id(reader_id)
     if "error" in result:
         return jsonify(result), 404
@@ -275,34 +290,22 @@ def get_order_details_route(order_id):
 
 # === УПРАВЛЕНИЕ ПЕРСОНАЛОМ ===
 
-# Добавить нового работника
-@app.route("/staff", methods=["POST"])
-def create_new_staff():
-    staff_data = request.json
-    staff = repository.add_staff(staff_data)
-    if staff:
-        return {"message": "Работник успешно добавлен"}, 201
-    else:
-        return {"error": "Ошибка, попробуйте заново"}, 404
-
-
 # Поиск сотрудника по id
 @app.route("/staff/<int:staff_id>", methods=["GET"])
 def get_staff_by_id(staff_id):
-    staff = repository.get_staff(staff_id)
+    staff = repository.get_staff_id(staff_id)
     if not staff:
         return jsonify(error="staff not found"), 404
     else:
         return jsonify(staff), 200
 
 
-# Просмотр всех сотрудников
+# Просмотр всех сотрудников (НУЖНА АВТОРИЗАЦИЯ ДЛЯ ПРОСМОТРА)
 @app.route("/staff", methods=["GET"])
 @jwt_required()
 def get_all_staff():
     claims = get_jwt()
     user_role = claims['role']
-    print("Проверка роли пользователя:", user_role)
     if user_role != 'admin':
         return jsonify(error="У вас нет доступа!"), 403
     staff = repository.get_staff_all()
@@ -312,9 +315,14 @@ def get_all_staff():
         return jsonify(staff), 200
 
 
-# Обновить роль для сотрудника
+# Обновить роль для сотрудника (НУЖНА АВТОРИЗАЦИЯ ДЛЯ ИЗМЕНЕНИЙ)
 @app.route("/staff/<int:staff_id>/role", methods=["PUT"])
+@jwt_required()
 def update_role_staff(staff_id):
+    claims = get_jwt()
+    user_role = claims['role']
+    if user_role != 'admin':
+        return jsonify(error="У вас нет доступа!"), 403
     updated_data = request.json.get('role')
     updated_staff = repository.update_staff_new_role(staff_id, updated_data)
     if not updated_staff:
@@ -322,19 +330,30 @@ def update_role_staff(staff_id):
     return jsonify(message="Роль успешно обновлена"), 200
 
 
-# Обновить уровень допуска для сотрудника
+# Обновить уровень допуска для сотрудника (НУЖНА АВТОРИЗАЦИЯ ДЛЯ ИЗМЕНЕНИЙ)
 @app.route("/staff/<int:staff_id>/level", methods=["PUT"])
+@jwt_required()
 def update_access_level_staff(staff_id):
-    updated_staff = repository.update_staff_new_access_level(staff_id)
+    claims = get_jwt()
+    user_role = claims['role']
+    if user_role != 'admin':
+        return jsonify(error="У вас нет доступа!"), 403
+    updated_data = request.json.get('level')
+    updated_staff = repository.update_staff_new_access_level(staff_id, updated_data)
     if updated_staff:
         return jsonify(message="Уровень доступа успешно обновлен"), 200
     else:
         return jsonify(error="Автор не найден"), 404
 
 
-# Удалить сотрудника (soft-delete)
+# Удалить сотрудника (soft-delete) (НУЖНА АВТОРИЗАЦИЯ ДЛЯ ИЗМЕНЕНИЙ)
 @app.route("/staff/<int:staff_id>", methods=["DELETE"])
+@jwt_required()
 def delete_staff(staff_id):
+    claims = get_jwt()
+    user_role = claims['role']
+    if user_role != 'admin':
+        return jsonify(error="У вас нет доступа!"), 403
     result = repository.delete_staff(staff_id)
     if "error" in result:
         return jsonify(result), 404
