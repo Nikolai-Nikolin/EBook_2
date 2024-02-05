@@ -325,7 +325,6 @@ def update_role_staff(staff_id):
 # Обновить уровень допуска для сотрудника
 @app.route("/staff/<int:staff_id>/level", methods=["PUT"])
 def update_access_level_staff(staff_id):
-    # updated_data = request.json.get(staff_id)
     updated_staff = repository.update_staff_new_access_level(staff_id)
     if updated_staff:
         return jsonify(message="Уровень доступа успешно обновлен"), 200
@@ -345,6 +344,7 @@ def delete_staff(staff_id):
 
 # ====== АВТОРИЗАЦИЯ ПЕРСОНАЛА ========
 
+# Регистрация пользователя
 @app.route('/auth/sign-up', methods=["POST"])
 def sign_up():
     data = request.get_json()
@@ -356,14 +356,17 @@ def sign_up():
     return {"status": "successfully registered"}, 201
 
 
+# Авторизация пользователя
 @app.route('/auth/sign-in', methods=["POST"])
 def sign_in():
     data = request.get_json()
     name = data["name"]
     password = data["password"]
     staff_id, err = service.get_staff(name, password)
+    staff_role = repository.get_staff_role(staff_id)
     if err is not None:
         return {"error": err}, 401
-    # additional_claims = {"role": "admin"}
-    access_token = create_access_token(identity=staff_id)
+    additional_claims = {"role": staff_role}
+    access_token = create_access_token(identity=staff_id,
+                                       additional_claims=additional_claims)
     return jsonify(access_token=access_token), 200

@@ -14,3 +14,4 @@ def get_staff(name, password):
     if staff is None:
         return None, "Incorrect login or password"
     return staff.id, None
+

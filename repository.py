@@ -482,6 +482,16 @@ def get_staff(name, password):
         return None
 
 
+# Ищем сотрудника по его роли (необходимо для роута авторизации)
+def get_staff_role(staff_id):
+    with Session(autoflush=False, bind=engine) as db:
+        staff = db.query(Staff).filter_by(id=staff_id).first()
+        if staff:
+            return staff.role
+        else:
+            return None
+
+
 # Поиск сотрудника по id
 # def get_staff(_id):
 #     with Session(autoflush=False, bind=engine) as db:
@@ -553,4 +563,3 @@ def delete_staff(_id):
             return {"message": "Работник успешно удален"}
         else:
             return {"error": "Работник не найден"}
-
