@@ -120,7 +120,7 @@ class Staff(Base):
     name = Column(String, unique=True)
     password = Column(String)
     role = Column(String(length=32), nullable=False)
-    access_level = Column(Integer, nullable=False)
+    access_level = Column(Integer)
     is_deleted = Column(Boolean, nullable=False, default=False)
 
 

@@ -458,46 +458,27 @@ def get_order_details(order_id):
 
 # === УПРАВЛЕНИЕ ПЕРСОНАЛОМ ===
 
-# Добавить нового работника
-# def add_staff(_staff_data):
-#     with Session(autoflush=False, bind=engine) as db:
-#         staff = Staff(**_staff_data)
-#         db.add(staff)
-#         db.commit()
-#         if staff:
-#             return True
-#         else:
-#             return False
-
-
-def add_staff(_staff_data):
+# Регистрация пользователя
+def add_staff(staff):
     try:
         with Session(autoflush=False, bind=engine) as db:
-            staff = Staff(**_staff_data)
             db.add(staff)
             db.commit()
     except SQLAlchemyError as e:
-        # Обработка ошибки
         print(f"Error creating user: {e}")
-        # Откат транзакции в случае ошибки
         db.rollback()
-        # Дополнительные действия в зависимости от вашего кейса
-        # Например, можно возвращать сообщение об ошибке или выбрасывать исключение
         return f"Error creating user: {e}"
 
 
-# Поиск сотрудника по id
+# Поиск авторизованного сотрудника
 def get_staff(name, password):
     try:
         with Session(autoflush=False, bind=engine) as db:
-            # Получение пользователя по имени пользователя и паролю
-            staff = db.query(Staff).filter(and_(Staff.name == name, Staff.password == password)).first()
-
+            staff = db.query(Staff).filter(and_(Staff.name == name,
+                                                Staff.password == password)).first()
         return staff
     except SQLAlchemyError as e:
-        # Обработка ошибки
         print(f"Error getting user: {e}")
-        # Возвращаем None в случае ошибки
         return None
 
 

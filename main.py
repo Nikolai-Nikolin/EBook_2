@@ -14,7 +14,7 @@ app = Flask(__name__)
 # Настройки для JWT
 app.config['JWT_SECRET_KEY'] = 'python-forever'
 app.config['JWT_ALGORITHM'] = 'HS256'
-app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(minutes=15)
+app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(days=90)
 
 jwt = JWTManager(app)
 

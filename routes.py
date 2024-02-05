@@ -1,6 +1,7 @@
 from flask import jsonify, Blueprint, request, make_response
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt, get_jwt_identity
 import repository
+from EBook_2 import service
 from connection import engine
 from models import Readers, Books, Staff
 from sqlalchemy.orm import sessionmaker
@@ -297,10 +298,16 @@ def get_staff_by_id(staff_id):
 
 # Просмотр всех сотрудников
 @app.route("/staff", methods=["GET"])
+@jwt_required()
 def get_all_staff():
+    claims = get_jwt()
+    user_role = claims['role']
+    print("Проверка роли пользователя:", user_role)
+    if user_role != 'admin':
+        return jsonify(error="У вас нет доступа!"), 403
     staff = repository.get_staff_all()
     if not staff:
-        return jsonify(error="staff not found"), 404
+        return jsonify(error="Сотрудники не найдены!"), 404
     else:
         return jsonify(staff), 200
 
@@ -341,11 +348,11 @@ def delete_staff(staff_id):
 @app.route('/auth/sign-up', methods=["POST"])
 def sign_up():
     data = request.get_json()
-    s = Staff(name=data["name"], password=data["password"])
-    err = service.create_staff(s)
+    s = Staff(name=data["name"], password=data["password"],
+              role=data["role"], access_level=data["access_level"])
+    err = service.add_staff(s)
     if err is not None:
         return {"message": err}, 400
-
     return {"status": "successfully registered"}, 201
 
 
@@ -357,8 +364,6 @@ def sign_in():
     staff_id, err = service.get_staff(name, password)
     if err is not None:
         return {"error": err}, 401
-
-    additional_claims = {"role": "admin"}
-    access_token = create_access_token(identity=staff_id,
-                                       additional_claims=additional_claims)
+    # additional_claims = {"role": "admin"}
+    access_token = create_access_token(identity=staff_id)
     return jsonify(access_token=access_token), 200
